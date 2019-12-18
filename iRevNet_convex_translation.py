@@ -1,6 +1,7 @@
 from utils import renormalize
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
 
 def iRevNet_convex_translation(model, loader, nz=50):
     model.eval()
