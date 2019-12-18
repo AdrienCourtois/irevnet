@@ -5,11 +5,14 @@ ICLR, 2018
 (c) Joern-Henrik Jacobsen, 2018
 """
 
+import sys
+sys.path.append('../')
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
-from model_utils import split, merge, injective_pad, psi
+from models.model_utils import split, merge, injective_pad, psi
 
 
 class irevnet_block(nn.Module):
