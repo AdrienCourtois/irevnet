@@ -8,11 +8,11 @@ class AutoEncoder(nn.Module):
 
         self.conv_down1 = nn.Conv2d(1, 5, 3, stride=2, padding=1) # [5, 16, 16]
         self.conv_down2 = nn.Conv2d(5, 10, 3, stride=2, padding=1) # [10, 8, 8]
-        self.conv_down3 = nn.Conv2d(10, 5, 3, stride=2, padding=1) # [5, 4, 4]
-        self.dense_down1 = nn.Linear(5*4*4, 50)
+        self.conv_down3 = nn.Conv2d(20, 5, 3, stride=2, padding=1) # [5, 4, 4]
+        self.dense_down1 = nn.Linear(20*4*4, 400)
 
-        self.dense_up1 = nn.Linear(50, 5*4*4)
-        self.conv_up1 = nn.ConvTranspose2d(5, 10, 2, stride=2) # [5, 8, 8]
+        self.dense_up1 = nn.Linear(400, 20*4*4)
+        self.conv_up1 = nn.ConvTranspose2d(20, 10, 2, stride=2) # [5, 8, 8]
         self.conv_up2 = nn.ConvTranspose2d(10, 5, 2, stride=2) # [5, 16, 16]
         self.conv_up3 = nn.ConvTranspose2d(5, 1, 2, stride=2) # [1, 32, 32]
 
@@ -38,23 +38,3 @@ class AutoEncoder(nn.Module):
     
     def forward(self, x):
         return self.decode(self.encode(x))
-    
-    def train(self, loader):
-        is_cuda = next(self.parameters()).is_cuda
-        F_loss = nn.SmoothL1Loss()
-        losses = []
-
-        for x, y in loader:
-            if is_cuda:
-                x, y = x.cuda(), y.cuda()
-            
-            output = self(x)
-            loss = F_loss(output, x)
-
-            loss.backward()
-            self.optimizer.step()
-            self.optimizer.zero_grad()
-
-            losses.append(loss.item())
-
-        return losses
