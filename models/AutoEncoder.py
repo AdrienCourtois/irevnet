@@ -8,7 +8,7 @@ class AutoEncoder(nn.Module):
 
         self.conv_down1 = nn.Conv2d(1, 5, 3, stride=2, padding=1) # [5, 16, 16]
         self.conv_down2 = nn.Conv2d(5, 10, 3, stride=2, padding=1) # [10, 8, 8]
-        self.conv_down3 = nn.Conv2d(20, 5, 3, stride=2, padding=1) # [5, 4, 4]
+        self.conv_down3 = nn.Conv2d(10, 20, 3, stride=2, padding=1) # [5, 4, 4]
         self.dense_down1 = nn.Linear(20*4*4, 400)
 
         self.dense_up1 = nn.Linear(400, 20*4*4)
