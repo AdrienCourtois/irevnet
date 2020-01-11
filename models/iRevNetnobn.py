@@ -85,7 +85,7 @@ class irevnet_block(nn.Module):
 class iRevNetnobn(nn.Module):
     def __init__(self, nBlocks, nStrides, nClasses, nChannels=None, init_ds=2,
                  dropout_rate=0., affineBN=True, in_shape=None, mult=4):
-        super(iRevNet, self).__init__()
+        super(iRevNetnobn, self).__init__()
         self.ds = in_shape[2]//2**(nStrides.count(2)+init_ds//2)
         self.init_ds = init_ds
         self.in_ch = in_shape[0] * 2**self.init_ds
